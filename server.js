@@ -12,12 +12,11 @@ const openPaths = ["/api/login", "/api/register", "/api/statistics/avg-kcal-per-
 
 
 app.use((req, res, next) => {
-  // If public
-  if (openPaths.includes(req.path)) {
+  // Allow all GET requests without authentication
+  if (req.method === "GET") {
     return next();
   }
-
-  console.log("Auth middleware triggered. Path:", req.path);
+  // Otherwise, require authentication
   authenticate(req, res, next);
 });
 
