@@ -138,8 +138,12 @@ app.get("/api/recipes", async (req, res) => {
       const { search, sort = "name", order = "asc", page = 1, limit = 10 } = req.query;
       const offset = (page - 1) * limit;
       const where = {};
-      where.UserId = req.user.userId;
       const orderBy = [];
+
+      // Only filter by user if authenticated
+      if (req.user && req.user.userId) {
+          where.UserId = req.user.userId;
+      }
 
       // Search by name
       if (search) {
