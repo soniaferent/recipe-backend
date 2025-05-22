@@ -28,4 +28,4 @@ dist/
 build/
 
 # Database configuration
-config/config.json 
+#config/config.json 
