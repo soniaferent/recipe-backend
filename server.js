@@ -10,15 +10,19 @@ app.use(bodyParser.json());
 
 const openPaths = ["/api/login", "/api/register", "/api/statistics/avg-kcal-per-category","/favicon.ico"];
 
-
 app.use((req, res, next) => {
-  // TEMPORARY: Allow all requests without authentication
-  return next();
-  // If you want to restore authentication, uncomment below:
-  // if (req.method === "GET") {
-  //   return next();
-  // }
-  // authenticate(req, res, next);
+  // Check if the path is in openPaths
+  if (openPaths.includes(req.path)) {
+    return next();
+  }
+  
+  // For GET requests to /api/recipes and /api/categories, allow without auth
+  if (req.method === "GET" && (req.path.startsWith("/api/recipes") || req.path.startsWith("/api/categories"))) {
+    return next();
+  }
+  
+  // For all other requests, require authentication
+  authenticate(req, res, next);
 });
 
 // LogAction function
