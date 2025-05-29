@@ -5,7 +5,10 @@ const { Category, Recipe } = db;
 const cors = require("cors");
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 app.use(bodyParser.json());
 
 const openPaths = ["/api/login", "/api/register", "/api/statistics/avg-kcal-per-category","/favicon.ico"];
